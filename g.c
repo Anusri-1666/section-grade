@@ -7,7 +7,7 @@
 typedef struct {
     int id;
     char name[50];
-    float grade;
+    int age;
 } Student;
 
 Student students[MAX];
@@ -23,10 +23,11 @@ void deleteStudent();
 
 int main() {
     int choice;
+
     loadData();
 
     do {
-        printf("\n--- Section Grade Management ---\n");
+        printf("\n--- Student Data Management ---\n");
         printf("1. Add Student\n");
         printf("2. List Students\n");
         printf("3. Update Student\n");
@@ -35,7 +36,7 @@ int main() {
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
-        switch(choice) {
+        switch (choice) {
             case 1: addStudent(); break;
             case 2: listStudents(); break;
             case 3: updateStudent(); break;
@@ -43,34 +44,41 @@ int main() {
             case 5: saveData(); printf("Data saved. Exiting...\n"); break;
             default: printf("Invalid choice!\n");
         }
-    } while(choice != 5);
+    } while (choice != 5);
 
     return 0;
 }
 
 /* Load data from file */
 void loadData() {
-    FILE *fp = fopen("grades.dat", "rb");
+    FILE *fp = fopen("data.txt", "r");
     if (!fp) return;
 
-    count = fread(students, sizeof(Student), MAX, fp);
+    count = 0;
+    while (fscanf(fp, "%d %s %d", 
+                  &students[count].id, 
+                  students[count].name, 
+                  &students[count].age) == 3) {
+        count++;
+    }
     fclose(fp);
 }
 
 /* Save data to file */
 void saveData() {
-    FILE *fp = fopen("grades.dat", "wb");
-    if (!fp) {
-        printf("Error saving data!\n");
-        return;
+    FILE *fp = fopen("data.txt", "w");
+    for (int i = 0; i < count; i++) {
+        fprintf(fp, "%d %s %d\n",
+                students[i].id,
+                students[i].name,
+                students[i].age);
     }
-    fwrite(students, sizeof(Student), count, fp);
     fclose(fp);
 }
 
 /* Add new student */
 void addStudent() {
-    if(count >= MAX) {
+    if (count >= MAX) {
         printf("Storage full!\n");
         return;
     }
@@ -78,67 +86,60 @@ void addStudent() {
     printf("Enter ID: ");
     scanf("%d", &students[count].id);
 
-    getchar(); // clear newline
     printf("Enter Name: ");
-    fgets(students[count].name, sizeof(students[count].name), stdin);
-    students[count].name[strcspn(students[count].name, "\n")] = 0; // remove newline
+    scanf("%s", students[count].name);
 
-    printf("Enter Grade: ");
-    scanf("%f", &students[count].grade);
+    printf("Enter Age: ");
+    scanf("%d", &students[count].age);
 
     count++;
     printf("Student added successfully!\n");
 }
 
-/* List all students */
+/* List students */
 void listStudents() {
-    if(count == 0) {
-        printf("No students available.\n");
-        return;
-    }
-
-    printf("\n--- Student Grades ---\n");
-    for(int i=0; i<count; i++) {
-        printf("%d. ID: %d | Name: %s | Grade: %.2f\n",
-               i+1, students[i].id, students[i].name, students[i].grade);
+    printf("\n--- Student List ---\n");
+    for (int i = 0; i < count; i++) {
+        printf("%d. ID: %d | Name: %s | Age: %d\n",
+               i + 1,
+               students[i].id,
+               students[i].name,
+               students[i].age);
     }
 }
 
-/* Update student */
+/* Update a student */
 void updateStudent() {
     int id;
     printf("Enter ID to update: ");
     scanf("%d", &id);
 
-    for(int i=0; i<count; i++) {
-        if(students[i].id == id) {
-            getchar(); // clear newline
-            printf("Enter new Name: ");
-            fgets(students[i].name, sizeof(students[i].name), stdin);
-            students[i].name[strcspn(students[i].name, "\n")] = 0;
-
-            printf("Enter new Grade: ");
-            scanf("%f", &students[i].grade);
-
-            printf("Student updated successfully!\n");
+    for (int i = 0; i < count; i++) {
+        if (students[i].id == id) {
+            printf("Enter new name: ");
+            scanf("%s", students[i].name);
+            printf("Enter new age: ");
+            scanf("%d", &students[i].age);
+            printf("Updated successfully!\n");
             return;
         }
     }
     printf("Student not found!\n");
 }
 
-/* Delete student */
+/* Delete a student */
 void deleteStudent() {
     int id;
     printf("Enter ID to delete: ");
     scanf("%d", &id);
 
-    for(int i=0; i<count; i++) {
-        if(students[i].id == id) {
-            for(int j=i; j<count-1; j++)
-                students[j] = students[j+1];
+    for (int i = 0; i < count; i++) {
+        if (students[i].id == id) {
+            /* shift left */
+            for (int j = i; j < count - 1; j++)
+                students[j] = students[j + 1];
             count--;
-            printf("Student deleted successfully!\n");
+            printf("Deleted successfully!\n");
             return;
         }
     }
