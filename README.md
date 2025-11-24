@@ -49,3 +49,14 @@ USe GCC compiler:
 
 '''bash
 gcc grade.c -o grade
+
+## Abstract
+   the section grade management system is a simple c program designed to help store, manage and display student grades for different sections. It allows the user to input student details,calculate total and average marks, and display results in a structured format.The program demonstrates bassic concepts of arrays, loops, functions and conditional logic in c.
+
+## Summary
+   The project provides a beginner-friendly implementation of a grade management system for academic sections.it unables users to:
+   -Enter student names and their marks.
+   -Calculate total and average.
+   -Categorize grades based on marks.
+   -Display all results in a clear tabular format.
+The aim of the program is to help students understand how  data can be organised and processed using arrays and functions in c.The system is simple,efficient and suitable for small scale grade processing tasks in a classroom environment.
