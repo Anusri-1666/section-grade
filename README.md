@@ -59,5 +59,6 @@ gcc grade.c -o grade
    -Calculate total and average.
    -Categorize grades based on marks.
    -Display all results in a clear tabular format.
-The aim of the program is to help students understand how  data can be organised and processed using arrays and functions in c.The system is simple,efficient and suitable for small scale grade processing tasks in a classroom environment.<img width="340" height="150" alt="s2" src="https://github.com/user-attachments/assets/1d8d0697-e720-440d-8637-a480c72161e8" />
+The aim of the program is to help students understand how  data can be organised and processed using arrays and functions in c.The system is simple,efficient and suitable for small scale grade processing tasks in a classroom environment
+.<img width="340" height="150" alt="s2" src="https://github.com/user-attachments/assets/1d8d0697-e720-440d-8637-a480c72161e8" />
 <img width="597" height="212" alt="s1" src="https://github.com/user-attachments/assets/2bab2b25-b05e-4c5e-9b45-fdd82bc1a78a" />
