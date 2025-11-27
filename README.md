@@ -6,7 +6,7 @@ it allows users to update,delete,view and store student records.
 ---
 
 ## Project Title
-Section/grade mnanagement system 
+Section/grade management system 
 
 ---
 
